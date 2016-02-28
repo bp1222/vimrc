@@ -10,6 +10,21 @@ set nocompatible
 set nobackup
 set novisualbell
 
+filetype off
+set rtp+=~/vimrc/bundle/Vundle.vim
+call vundle#begin(expand(s:localvimdir . '/bundle'))
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'zhaocai/GoldenView.Vim'
+Plugin 'scrooloose/nerdtree'
+Plugin '2072/vim-syntax-for-PHP.git'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'git://github.com/bp1222/phpfolding.vim'
+call vundle#end()
+filetype plugin indent on
+
+colorscheme jellybeans
+
 " Movement
 set backspace=indent,eol,start
 set whichwrap=b,s,h,l,<,>,[,]
@@ -37,29 +52,28 @@ set numberwidth=5
 set foldcolumn=3
 set smartindent
 set showmatch
-set term=xterm-256color
+
+" List
+set list
+set listchars=tab:>-,trail:-,nbsp:'
 
 " Spacing Settings
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 
-filetype off
-set rtp+=~/vimrc/bundle/Vundle.vim
-call vundle#begin(expand(s:localvimdir . '/bundle'))
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'StanAngeloff/php.vim'
-Plugin 'Bling/vim-airline'
-Plugin 'git://github.com/bp1222/phpfolding.vim'
-call vundle#end()
-filetype plugin indent on
-
 " StatusLine
 set laststatus=2
+
+" NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Remap movement keys to go through multi-line lines
 nnoremap j gj
 nnoremap k gk
+nnoremap <space> za
 vnoremap j gj
 vnoremap k gk
 
