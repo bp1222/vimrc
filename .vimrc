@@ -17,12 +17,13 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'scrooloose/nerdtree'
-Plugin '2072/vim-syntax-for-PHP.git'
-Plugin 'nanotech/jellybeans.vim'
 Plugin 'git://github.com/bp1222/phpfolding.vim'
+Plugin 'git://github.com/bp1222/vim-syntax-for-PHP'
+Plugin 'git://github.com/bp1222/jellybeans.vim'
 call vundle#end()
 filetype plugin indent on
 
+" Jellybeans
 colorscheme jellybeans
 
 " Movement
