@@ -17,6 +17,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'git://github.com/bp1222/phpfolding.vim'
 Plugin 'git://github.com/bp1222/vim-syntax-for-PHP'
 Plugin 'git://github.com/bp1222/jellybeans.vim'
@@ -68,16 +69,18 @@ set softtabstop=4
 set laststatus=2
 
 " NERDTree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Remap movement keys to go through multi-line lines
 nnoremap j gj
 nnoremap k gk
-nnoremap <space> za
 vnoremap j gj
 vnoremap k gk
+
+" Space can fold/unfold
+nnoremap <space> za
 
 " Fix up some filetypes
 au BufNewFile,BufRead *.inc set filetype=php
