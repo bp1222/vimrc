@@ -14,6 +14,7 @@ filetype off
 set rtp+=~/vimrc/bundle/Vundle.vim
 call vundle#begin(expand(s:localvimdir . '/bundle'))
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vim-airline/vim-airline'
 Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'scrooloose/nerdtree'
@@ -26,6 +27,9 @@ filetype plugin indent on
 
 " Jellybeans
 colorscheme jellybeans
+
+" Indent Guide
+let g:indent_guides_enable_on_vim_startup = 1
 
 " Movement
 set backspace=indent,eol,start
@@ -94,6 +98,12 @@ autocmd BufReadPost *
 	\ if line("'\"") > 0 && line ("'\"") <= line("$") |
 	\   exe "normal! g'\"" |
 	\ endif
+
+" Persistant Undo
+" set undofile
+" et undodir=$HOME/vimrc/undo
+" et undolevels=1000
+" et undoreload=10000
 
 " Highlight extra spaces or tabs in red.
 highlight RedundantSpaces ctermbg=red guibg=red
