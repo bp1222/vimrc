@@ -19,10 +19,13 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'git://github.com/bp1222/phpfolding.vim'
 Plugin 'git://github.com/bp1222/vim-syntax-for-PHP'
 Plugin 'git://github.com/bp1222/jellybeans.vim'
 call vundle#end()
+
 filetype plugin indent on
 
 " Jellybeans
@@ -87,11 +90,19 @@ vnoremap k gk
 nnoremap <space> za
 
 " Fix up some filetypes
+au BufNewFile,BufRead *.re set filetype=c
+au BufNewFile,BufRead *.phpt set filetype=php
 au BufNewFile,BufRead *.inc set filetype=php
 au BufNewFile,BufRead *.class set filetype=php
 au BufNewFile,BufRead *.js set filetype=javascript
 au BufNewFile,BufRead *.tpl set filetype=smarty
 au BufNewFile,BufRead *.tmpl set filetype=smarty
+au BufNewFile,BufRead *.py set filetype=python
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 
 " Save last position of cursor
 autocmd BufReadPost *
