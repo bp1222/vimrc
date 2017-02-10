@@ -76,6 +76,7 @@ set softtabstop=4
 set laststatus=2
 
 " NERDTree
+let g:nerdtree_tabs_open_on_console_startup = 1
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
