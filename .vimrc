@@ -14,22 +14,29 @@ filetype off
 set rtp+=~/vimrc/bundle/Vundle.vim
 call vundle#begin(expand(s:localvimdir . '/bundle'))
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vim-airline/vim-airline'
 Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'git://github.com/bp1222/phpfolding.vim'
-Plugin 'git://github.com/bp1222/vim-syntax-for-PHP'
+Plugin 'klen/python-mode'
 Plugin 'git://github.com/bp1222/jellybeans.vim'
 call vundle#end()
 
 filetype plugin indent on
 
+let g:pymode_folding = 1
+let g:pymode_lint_on_write = 0
+let g:pymode_lint_on_fly = 1
+let g:pymode_python = 'python3'
+let g:pymode_folding_regex = '^\s*\%(def\|async\s\+def\) .\+\(:\s\+\w\)\@!'
+
 " Jellybeans
 colorscheme jellybeans
+
+let g:jellybeans_overrides = {
+            \    'background': { 'ctermbg': 'black', '256ctermbg': 'black' },
+            \}
 
 " Indent Guide
 let g:indent_guides_enable_on_vim_startup = 1
