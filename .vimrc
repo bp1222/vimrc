@@ -95,6 +95,8 @@ autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+nnoremap <C-n> :NERDTreeToggle<CR>
+
 " Remap movement keys to go through multi-line lines
 nnoremap j gj
 nnoremap k gk
