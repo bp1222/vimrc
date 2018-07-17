@@ -21,15 +21,22 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'klen/python-mode'
 Plugin 'git://github.com/bp1222/jellybeans.vim'
+
+Plugin 'dart-lang/dart-vim-plugin'
+
 call vundle#end()
 
 filetype plugin indent on
 
+" Python
 let g:pymode_folding = 1
 let g:pymode_lint_on_write = 0
 let g:pymode_lint_on_fly = 1
 let g:pymode_python = 'python3'
 let g:pymode_folding_regex = '^\s*\%(def\|async\s\+def\) .\+\(:\s\+\w\)\@!'
+
+" Dart
+let dart_html_in_string=v:true
 
 " Jellybeans
 colorscheme jellybeans
@@ -106,6 +113,7 @@ au BufNewFile,BufRead *.js set filetype=javascript
 au BufNewFile,BufRead *.tpl set filetype=smarty
 au BufNewFile,BufRead *.tmpl set filetype=smarty
 au BufNewFile,BufRead *.py set filetype=python
+au BufNewFile,BufRead *.dart set filetype=dart
 
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
