@@ -19,10 +19,12 @@ Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'klen/python-mode'
 Plugin 'git://github.com/bp1222/jellybeans.vim'
 
+" Plugin 'klen/python-mode'
+
 Plugin 'dart-lang/dart-vim-plugin'
+Plugin 'solarnz/thrift.vim'
 
 call vundle#end()
 
@@ -34,6 +36,10 @@ let g:pymode_lint_on_write = 0
 let g:pymode_lint_on_fly = 1
 let g:pymode_python = 'python3'
 let g:pymode_folding_regex = '^\s*\%(def\|async\s\+def\) .\+\(:\s\+\w\)\@!'
+
+" Golden View
+let g:goldenview__enable_default_mapping = 0
+nmap <silent> <C-L>  <Plug>GoldenViewSplit
 
 " Dart
 let dart_html_in_string=v:true
@@ -82,12 +88,15 @@ set listchars=tab:>-,trail:-,nbsp:'
 
 " Spacing Settings
 set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 
 " StatusLine
 set laststatus=2
+
+" Don't use .swp files
+set noswapfile
 
 " NERDTree
 let g:nerdtree_tabs_open_on_console_startup = 1
@@ -95,7 +104,8 @@ autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <silent> <C-n> :NERDTreeToggle<CR>
+vnoremap <silent> <C-n> :NERDTreeToggle<CR>
 
 " Remap movement keys to go through multi-line lines
 nnoremap j gj
@@ -116,6 +126,7 @@ au BufNewFile,BufRead *.tpl set filetype=smarty
 au BufNewFile,BufRead *.tmpl set filetype=smarty
 au BufNewFile,BufRead *.py set filetype=python
 au BufNewFile,BufRead *.dart set filetype=dart
+au BufNewFile,BufRead *.frugal set filetype=thrift
 
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
