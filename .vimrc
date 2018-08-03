@@ -1,62 +1,34 @@
-" David Walkers .vimrc
-
-" Set this directory into the runtime path
-let &runtimepath = printf('%s/vimfiles,%s,%s/vimfiles/after', $VIM, $VIMRUNTIME, $VIM)
-let s:localvimdir= expand('<sfile>:p:h')
-let &runtimepath = printf('%s,%s,%s/after', s:localvimdir, &runtimepath, s:localvimdir)
-
-" General environ options
-set nocompatible
-set nobackup
-set novisualbell
-
-filetype off
-set rtp+=~/vimrc/bundle/Vundle.vim
-call vundle#begin(expand(s:localvimdir . '/bundle'))
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'zhaocai/GoldenView.Vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'git://github.com/bp1222/jellybeans.vim'
+" Plugins
+call plug#begin('~/vimrc/bundle')
+Plug 'zhaocai/GoldenView.Vim'
+Plug 'git://github.com/bp1222/jellybeans.vim'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'scrooloose/nerdtree'
 
 " Plugin 'klen/python-mode'
+Plug 'solarnz/thrift.vim'
+Plug 'dart-lang/dart-vim-plugin'
 
-Plugin 'dart-lang/dart-vim-plugin'
-Plugin 'solarnz/thrift.vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java'}
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+Plug 'ctrlpvim/ctrlp.vim'
 
-call vundle#end()
+call plug#end()
 
+" Reset
+filetype off
 filetype plugin indent on
-
-" Python
-let g:pymode_folding = 1
-let g:pymode_lint_on_write = 0
-let g:pymode_lint_on_fly = 1
-let g:pymode_python = 'python3'
-let g:pymode_folding_regex = '^\s*\%(def\|async\s\+def\) .\+\(:\s\+\w\)\@!'
-
-" Golden View
-let g:goldenview__enable_default_mapping = 0
-nmap <silent> <C-L>  <Plug>GoldenViewSplit
-
-" Dart
-let dart_html_in_string=v:true
-
-" Jellybeans
-colorscheme jellybeans
-
-let g:jellybeans_overrides = {
-            \    'background': { 'ctermbg': 'black', '256ctermbg': 'black' },
-            \}
-
-" Indent Guide
-let g:indent_guides_enable_on_vim_startup = 1
 
 " Movement
 set backspace=indent,eol,start
 set whichwrap=b,s,h,l,<,>,[,]
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
 
 " Encoding
 set encoding=utf-8
@@ -74,13 +46,18 @@ set wildmode=list:longest
 set wildignore=*.dll,*.o,*.obj,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
 
 " Interface Settings
-syntax on
-set background=dark
 set number
 set numberwidth=5
 set foldcolumn=3
 set smartindent
 set showmatch
+
+" Syntax highlighting
+let g:jellybeans_overrides = {
+      \    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
+      \}
+colorscheme jellybeans
+syntax on
 
 " List
 set list
@@ -98,20 +75,19 @@ set laststatus=2
 " Don't use .swp files
 set noswapfile
 
-" NERDTree
-let g:nerdtree_tabs_open_on_console_startup = 1
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Global Python Executable
+let g:python2_host_prog = '/opt/homebrew/bin/python2'
+let g:python3_host_prog = '/opt/homebrew/bin/python3'
 
-nnoremap <silent> <C-n> :NERDTreeToggle<CR>
-vnoremap <silent> <C-n> :NERDTreeToggle<CR>
+" Golden View
+let g:goldenview__enable_default_mapping = 0
+nmap <silent> <C-L>  <Plug>GoldenViewSplit
 
-" Remap movement keys to go through multi-line lines
-nnoremap j gj
-nnoremap k gk
-vnoremap j gj
-vnoremap k gk
+" Indent Guide
+let g:indent_guides_enable_on_vim_startup = 1
+
+" Dart
+let dart_html_in_string=v:true
 
 " Space can fold/unfold
 nnoremap <space> za
@@ -127,28 +103,85 @@ au BufNewFile,BufRead *.tmpl set filetype=smarty
 au BufNewFile,BufRead *.py set filetype=python
 au BufNewFile,BufRead *.dart set filetype=dart
 au BufNewFile,BufRead *.frugal set filetype=thrift
+au BufNewFile,BufRead *.java set filetype=java
 
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+" NERDTree
+let g:nerdtree_tabs_open_on_console_startup = 1
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Save last position of cursor
-autocmd BufReadPost *
-	\ if line("'\"") > 0 && line ("'\"") <= line("$") |
-	\   exe "normal! g'\"" |
-	\ endif
+nnoremap <silent> <C-n> :NERDTreeToggle<CR>
+vnoremap <silent> <C-n> :NERDTreeToggle<CR>
 
-" Persistant Undo
-" set undofile
-" et undodir=$HOME/vimrc/undo
-" et undolevels=1000
-" et undoreload=10000
+"Ctrlp Settings {{{
+let g:ctrlp_map = '<c-p>'
 
-" Highlight extra spaces or tabs in red.
-highlight RedundantSpaces ctermbg=red guibg=red
-match RedundantSpaces /\s\+$\| \+\ze\t/
+let g:ctrlp_cmd = 'ctrlp'
+let g:ctrlp_dont_split = 'nerd'
+let g:ctrlp_working_path_mode = 'rw'
+set wildignore+=*/.git/*,*/tmp/*,*.swp/*,*/node_modules/*,*/temp/*,*/Builds/*,*/ProjectSettings/*
+let g:ctrlp_max_files = 0
 
-" Because => needs space around it
-nmap <silent> <C-i>
-			\ :%s/\(['"a-zA-Z]\)=>\(['"a-zA-Z0-9$]\)/\1 => \2/g<CR>
+function! CtrlPCommand()
+  let c = 0
+  let wincount = winnr('$')
+  " Don't open it here if current buffer is not writable (e.g. NERDTree)
+  while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
+    exec 'wincmd w'
+    let c = c + 1
+  endwhile
+  exec 'CtrlP'
+endfunction
+let g:ctrlp_cmd = 'call CtrlPCommand()'
+
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '',
+      \ 'file': '\.so$\|\.dat$|\.DS_Store$|\.meta|\.zip|\.rar|\.ipa|\.apk',
+      \ }
+" }}}
+
+"Ale Settings {{{
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_sign_error = '✘✘'
+let g:ale_sign_warning = '⚠⚠'
+let g:ale_open_list = 0
+let g:ale_loclist = 0
+"g:ale_javascript_eslint_use_global = 1
+let g:ale_linters = {
+      \  'cs':['syntax', 'semantic', 'issues'],
+      \  'python': ['pylint'],
+      \  'java': ['javac']
+      \ }
+" }}}
+
+" Deoplete {{{
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_start_length = 2
+let g:deoplete#sources = {}
+let g:deoplete#sources._=['buffer', 'file', 'dictionary']
+let g:deoplete#sources.javascript = ['tern', 'omni', 'file', 'buffer']
+
+" Use smartcase.
+let g:deoplete#enable_smart_case = 1
+
+""use TAB as the mapping
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ?  "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#mappings#manual_complete()
+function! s:check_back_space() abort "" {{{
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction "" }}}
+" }}}
+
+" Java {{{
+" Easy compile java in vim
+autocmd FileType java set makeprg=javac\ %
+set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C.%#
+" Java completion
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+autocmd FileType java JCEnable
+" }}}
