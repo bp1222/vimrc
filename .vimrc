@@ -1,6 +1,7 @@
 " Plugins
 call plug#begin('~/vimrc/bundle')
 Plug 'zhaocai/GoldenView.Vim'
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'git://github.com/bp1222/jellybeans.vim'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'vim-airline/vim-airline'
@@ -8,13 +9,8 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'scrooloose/nerdtree'
 
 " Plugin 'klen/python-mode'
-Plug 'solarnz/thrift.vim'
-Plug 'dart-lang/dart-vim-plugin'
-
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java'}
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'workiva/frugal'
 
 call plug#end()
 
@@ -53,21 +49,12 @@ set smartindent
 set showmatch
 
 " Syntax highlighting
-let g:jellybeans_overrides = {
-      \    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
-      \}
-colorscheme jellybeans
-syntax on
+colorscheme challenger_deep
+syntax enable
 
 " List
 set list
 set listchars=tab:>-,trail:-,nbsp:'
-
-" Spacing Settings
-set expandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
 
 " StatusLine
 set laststatus=2
@@ -104,6 +91,17 @@ au BufNewFile,BufRead *.py set filetype=python
 au BufNewFile,BufRead *.dart set filetype=dart
 au BufNewFile,BufRead *.frugal set filetype=thrift
 au BufNewFile,BufRead *.java set filetype=java
+au BufNewFile,BufRead *.wsd set filetype=plantuml
+
+" Spacing Settings
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+autocmd FileType php set expandtab|set tabstop=4|set shiftwidth=4|set softtabstop=4
+autocmd FileType python set expandtab|set tabstop=4|set shiftwidth=4|set softtabstop=4
+autocmd FileType go set tabstop=4|set shiftwidth=4|set softtabstop=4
+autocmd FileType dart set expandtab
+autocmd FileType java set expandtab
 
 " NERDTree
 let g:nerdtree_tabs_open_on_console_startup = 1
@@ -114,74 +112,14 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 vnoremap <silent> <C-n> :NERDTreeToggle<CR>
 
-"Ctrlp Settings {{{
-let g:ctrlp_map = '<c-p>'
+" vim-go
+let g:go_fmt_command = "goimports"
+let g:go_autodetect_gopath = 1
+let g:go_list_type = "quickfix"
 
-let g:ctrlp_cmd = 'ctrlp'
-let g:ctrlp_dont_split = 'nerd'
-let g:ctrlp_working_path_mode = 'rw'
-set wildignore+=*/.git/*,*/tmp/*,*.swp/*,*/node_modules/*,*/temp/*,*/Builds/*,*/ProjectSettings/*
-let g:ctrlp_max_files = 0
-
-function! CtrlPCommand()
-  let c = 0
-  let wincount = winnr('$')
-  " Don't open it here if current buffer is not writable (e.g. NERDTree)
-  while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
-    exec 'wincmd w'
-    let c = c + 1
-  endwhile
-  exec 'CtrlP'
-endfunction
-let g:ctrlp_cmd = 'call CtrlPCommand()'
-
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '',
-      \ 'file': '\.so$\|\.dat$|\.DS_Store$|\.meta|\.zip|\.rar|\.ipa|\.apk',
-      \ }
-" }}}
-
-"Ale Settings {{{
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_sign_error = '✘✘'
-let g:ale_sign_warning = '⚠⚠'
-let g:ale_open_list = 0
-let g:ale_loclist = 0
-"g:ale_javascript_eslint_use_global = 1
-let g:ale_linters = {
-      \  'cs':['syntax', 'semantic', 'issues'],
-      \  'python': ['pylint'],
-      \  'java': ['javac']
-      \ }
-" }}}
-
-" Deoplete {{{
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_start_length = 2
-let g:deoplete#sources = {}
-let g:deoplete#sources._=['buffer', 'file', 'dictionary']
-let g:deoplete#sources.javascript = ['tern', 'omni', 'file', 'buffer']
-
-" Use smartcase.
-let g:deoplete#enable_smart_case = 1
-
-""use TAB as the mapping
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ?  "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ deoplete#mappings#manual_complete()
-function! s:check_back_space() abort "" {{{
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction "" }}}
-" }}}
-
-" Java {{{
-" Easy compile java in vim
-autocmd FileType java set makeprg=javac\ %
-set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C.%#
-" Java completion
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-autocmd FileType java JCEnable
-" }}}
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 1
