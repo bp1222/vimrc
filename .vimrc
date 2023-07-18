@@ -1,18 +1,23 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/vimrc/bundle/Vundle.vim
+
 " Plugins
-call plug#begin('~/vimrc/bundle')
-Plug 'zhaocai/GoldenView.Vim'
-Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-Plug 'git://github.com/bp1222/jellybeans.vim'
-Plug 'kien/rainbow_parentheses.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'scrooloose/nerdtree'
+call vundle#begin()
+Plugin 'zhaocai/GoldenView.Vim'
+Plugin 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plugin 'git://github.com/bp1222/jellybeans.vim'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'scrooloose/nerdtree'
 
 " Plugin 'klen/python-mode'
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'workiva/frugal'
-
-call plug#end()
+Plugin 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plugin 'workiva/frugal'
+call vundle#end()
 
 " Reset
 filetype off
